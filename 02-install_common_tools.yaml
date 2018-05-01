@@ -1,0 +1,23 @@
+--- # Infrastructure demo YAML - install httpd on redhat
+- hosts: "{{ host_group }}" 
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: no
+  vars:
+    host_group: mclab
+    common_tools:
+      - git
+      - gcc
+      - make
+      - python
+      - python-pip
+      - python-virtualenv
+      - vim
+  tasks: 
+  - name: Install common tools
+    apt:
+      name: "{{ item }}"
+      state: latest
+    with_items: "{{ common_tools }}"
